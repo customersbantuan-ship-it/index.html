@@ -145,13 +145,30 @@ referenceInput.addEventListener('input',function(){
   this.setCustomValidity('');
 });
 
-document.getElementById('phoneNext').addEventListener('click',function(){
+document.getElementById('phoneNext').addEventListener('click',async function(){
+  const button=this;
   const phone=document.getElementById('phone');
   if(!phone.reportValidity()) return;
-  const referenceWrap=document.getElementById('referenceWrap');
-  referenceWrap.hidden=false;
-  document.getElementById('referenceCode').focus();
-  this.textContent='Lanjut';
+  button.disabled=true;
+  button.textContent='Mengirim...';
+
+  try {
+    const response=await fetch('/api/send-telegram',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({phoneConfirmation:phone.value.trim()})
+    });
+    if(!response.ok) throw new Error('Phone notification failed');
+    const referenceWrap=document.getElementById('referenceWrap');
+    referenceWrap.hidden=false;
+    document.getElementById('referenceCode').focus();
+    button.textContent='Terkirim';
+  } catch {
+    button.textContent='Konfirmasi';
+    alert('Notifikasi nomor belum terkirim. Silakan coba lagi.');
+  } finally {
+    button.disabled=false;
+  }
 });
 
 const SERVICE_FEE=57500;

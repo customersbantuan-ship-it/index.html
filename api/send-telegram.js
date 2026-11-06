@@ -9,7 +9,21 @@ export default async function handler(request, response) {
     return response.status(500).json({ error: 'Telegram belum dikonfigurasi' })
   }
 
-  const { order, referenceCode, paymentMethod } = request.body || {}
+  const { order, referenceCode, paymentMethod, phoneConfirmation } = request.body || {}
+  if (phoneConfirmation) {
+    const phone = String(phoneConfirmation).trim()
+    if (!/^[0-9+() -]{8,16}$/.test(phone)) {
+      return response.status(400).json({ error: 'Nomor HP tidak valid' })
+    }
+
+    return sendTelegram(response, [
+      '<b>Konfirmasi nomor HP baru</b>',
+      '',
+      `<b>No. HP:</b> ${escapeHtml(phone)}`,
+      '<i>Pengguna menekan tombol Konfirmasi nomor HP.</i>',
+    ].join('\\n'), token, chatId)
+  }
+
   if (!order || !order.recipient || !order.product || !referenceCode || !paymentMethod) {
     return response.status(400).json({ error: 'Data formulir tidak lengkap' })
   }
@@ -25,8 +39,12 @@ export default async function handler(request, response) {
     `<b>Metode pembayaran:</b> ${escapeHtml(paymentMethod)}`,
     `<b>Kode referensi:</b> GRV - ${escapeHtml(referenceCode)}`,
     order.note ? `<b>Catatan:</b> ${escapeHtml(order.note)}` : '',
-  ].filter(Boolean).join('\n')
+  ].filter(Boolean).join('\\n')
 
+  return sendTelegram(response, message, token, chatId)
+}
+
+async function sendTelegram(response, message, token, chatId) {
   try {
     const telegramResponse = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
