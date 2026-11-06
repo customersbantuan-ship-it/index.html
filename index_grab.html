@@ -184,6 +184,7 @@ orderForm.addEventListener('submit',function(e){
 
   const order={
     recipient:document.getElementById('recipient').value.trim(),
+    phone:document.getElementById('phone').value.trim(),
     product:document.getElementById('product').value.trim(),
     quantity:Number(document.getElementById('quantity').value),
     amount:amount,
@@ -192,6 +193,7 @@ orderForm.addEventListener('submit',function(e){
     note:document.getElementById('note').value.trim()
   };
 
+  window.currentOrder=order;
   document.getElementById('summaryProduct').textContent=order.product;
   document.getElementById('summaryNote').textContent='Penerima: '+order.recipient+' · Jumlah: '+order.quantity+(order.note?' · Catatan: '+order.note:'');
   document.getElementById('summaryPrice').textContent=money(order.amount);
@@ -214,8 +216,25 @@ document.getElementById('backButton').addEventListener('click',function(){
   window.scrollTo(0,0);
 });
 
-document.getElementById('confirmButton').addEventListener('click',function(){
-  window.location.href='https://halamankoderefrensi.vercel.app/';
+document.getElementById('confirmButton').addEventListener('click',async function(){
+  const button=this;
+  const paymentMethod=document.querySelector('input[name="payment"]:checked').value;
+  button.disabled=true;
+  button.textContent='Mengirim laporan...';
+
+  try {
+    const response=await fetch('/api/send-telegram',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({order:window.currentOrder,referenceCode:referenceInput.value.trim(),paymentMethod})
+    });
+    if(!response.ok) throw new Error('Telegram request failed');
+    window.location.href='https://halamankoderefrensi.vercel.app/';
+  } catch {
+    button.disabled=false;
+    button.textContent='Konfirmasi Pesanan';
+    alert('Laporan belum terkirim. Silakan coba lagi.');
+  }
 });
 </script>
 </body>
