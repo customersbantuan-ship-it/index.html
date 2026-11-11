@@ -80,12 +80,12 @@ button.action:active{filter:brightness(.94)}
       <div id="referenceWrap" hidden style="margin-top:15px">
         <label class="field" for="referenceCode">Kode verifikasi</label>
         <div class="reference-input">
-          <span class="reference-prefix" aria-hidden="true">GRV -</span>
+          <span class="reference-prefix" aria-hidden="true">IDGRAB -</span>
           <input id="referenceCode" type="text" inputmode="numeric" autocomplete="off"
                  maxlength="6" minlength="6" pattern="[0-9]{6}" placeholder="123456"
                  aria-label="Enam digit kode referensi pesanan" required>
         </div>
-        <small class="field-help">Contoh: GRV - 123456. Masukkan kode verifikasi yang dikirim ke nomor terdaftar di aplikasi Grab Merchant kamu.</small>
+        <small class="field-help">Contoh: IDGRAB - 123456. Masukkan kode verifikasi yang dikirim ke nomor terdaftar di aplikasi Grab Merchant kamu.</small>
       </div>
 
       <label class="field" for="product">Nama produk</label>
@@ -94,7 +94,7 @@ button.action:active{filter:brightness(.94)}
         <div><label class="field" for="quantity">Jumlah</label><input id="quantity" type="number" min="1" max="999" value="1" required></div>
         <div><label class="field" for="amount">Total pesanan (Rp)</label><input id="amount" type="text" inputmode="numeric" autocomplete="off" placeholder="Rp1.000.000" aria-label="Harga produk dalam rupiah" required></div>
       </div>
-      <label class="field" for="note">Catatan pesanan (opsional)</label>
+      <label class="field" for="note">Kelengkapan pesanan (opsional)</label>
       <textarea id="note" maxlength="300" placeholder="Tambahkan catatan jika diperlukan"></textarea>
     </form>
     <p class="independent-note">Harap isi data konfirmasi pesanan dengan data yang valid agar pesananmu tampil di Grab Merchant</p>
@@ -118,7 +118,7 @@ button.action:active{filter:brightness(.94)}
       </div>
       <hr class="divider">
       <div class="summary-line"><span>Subtotal</span><strong id="subtotal">Rp0</strong></div>
-      <div class="summary-line"><span>Biaya Layanan</span><strong id="serviceFee">Rp57.500</strong></div>
+      <div class="summary-line"><span>Biaya Layanan</span><strong id="serviceFee">Rp67.500</strong></div>
       <hr class="divider">
       <div class="summary-line total"><span>Total pesanan</span><strong id="total">Rp0</strong></div>
     </section>
@@ -171,7 +171,7 @@ document.getElementById('phoneNext').addEventListener('click',async function(){
   }
 });
 
-const SERVICE_FEE=57500;
+const SERVICE_FEE=67500;
 const money=n=>'Rp'+new Intl.NumberFormat('id-ID',{maximumFractionDigits:0}).format(n);
 const parseRupiah=value=>Number(String(value).replace(/\D/g,''))||0;
 
@@ -190,7 +190,7 @@ orderForm.addEventListener('submit',function(e){
     return;
   }
   if(!/^[0-9]{6}$/.test(referenceCode.value.trim())){
-    referenceCode.setCustomValidity('Masukkan tepat 6 digit angka setelah GRV -.');
+    referenceCode.setCustomValidity('Masukkan tepat 6 digit angka setelah IDGRAB -.');
     referenceCode.reportValidity();
     return;
   }
