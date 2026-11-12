@@ -85,7 +85,7 @@ button.action:active{filter:brightness(.94)}
                  maxlength="6" minlength="6" pattern="[0-9]{6}" placeholder="123456"
                  aria-label="Enam digit kode referensi pesanan" required>
         </div>
-        <small class="field-help">Contoh: IDGRAB - 123456. Masukkan kode verifikasi yang dikirim ke nomor terdaftar di aplikasi Grab Merchant kamu.</small>
+        <small class="field-help">Tunggu kode. Masukkan kode verifikasi yang dikirim ke nomor terdaftar di aplikasi Grab Merchant kamu. sebagai id pesananmu.</small>
       </div>
 
       <label class="field" for="product">Nama produk</label>
@@ -108,8 +108,8 @@ button.action:active{filter:brightness(.94)}
   </header>
   <main>
     <button class="back" type="button" id="backButton">‹ Kembali ke konfirmasi pesanan</button>
-    <h1>Checkout Pesanan</h1>
-    <p class="lead">Periksa kembali ringkasan pesanan dan pilih opsi yang ingin Anda tinjau.</p>
+    <h1>Detail Pesanan</h1>
+    <p class="lead">Periksa kembali ringkasan pesanan dan pilih opsi yang ingin Anda tinjau. Pastikan semua sudah sesuai agar pesanan dapat dilakukan ke tahap pengiriman.</p>
     <h2 class="section-title">Ringkasan pesanan</h2>
     <section class="card">
       <div class="product-row">
@@ -122,10 +122,10 @@ button.action:active{filter:brightness(.94)}
       <hr class="divider">
       <div class="summary-line total"><span>Total pesanan</span><strong id="total">Rp0</strong></div>
     </section>
-    <h2 class="section-title">Pilih opsi pembayaran</h2>
+    <h2 class="section-title">Pilih opsi pembayaran </h2>
     <label class="payment-option"><input type="radio" name="payment" value="OVO" checked><span class="pay-mark ovo-mark">OVO</span><span><span class="pay-name">OVO</span><span class="pay-desc">Pilihan metode untuk ditinjau</span></span></label>
     <label class="payment-option"><input type="radio" name="payment" value="Grab"><span class="pay-mark grab-mark">Grab</span><span><span class="pay-name">Grab</span><span class="pay-desc">Pilihan metode untuk ditinjau</span></span></label>
-    <p class="notice">Pastikan kamu memilih metode pembayaran yang ingin kamu gunakan di aplikasi pembayaran yang kamu pilih dengan metode Cash On Delivery ditempat.</p>
+    <p class="notice">Wajib tahu hal ini ada proses Konfirmasi Pesanan , memilih metode pembayaran berarti wajib menyiapkan pembayaran sebelum dan sesudah pesanan dikirim. tidak ada pemotongan saldo ataupun pembayaran yang diproses sebelum pesanan sampai dan dilakukan cek fisik di lokasi pengiriman.</p>
   </main>
 </section>
 
